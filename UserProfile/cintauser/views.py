@@ -9,12 +9,8 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 from rest_framework.decorators import api_view
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-from django.views.decorators.vary import vary_on_cookie
 
 
-@method_decorator(cache_page(60*60*2))
 @api_view(['GET', 'POST', 'DELETE'])
 def user_list(request):
     if request.method == 'GET':
@@ -36,8 +32,6 @@ def user_list(request):
         return JsonResponse(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@method_decorator(cache_page(60*60*2))
-@method_decorator(vary_on_cookie)
 @api_view(['GET', 'PUT', 'DELETE'])
 def user_detail(request, pk):
     # find tutorial by pk (id)
